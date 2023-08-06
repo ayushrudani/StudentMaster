@@ -41,7 +41,7 @@ namespace StudentMaster.Controllers
                 con.Open();
                 SqlCommand sqlCommand = con.CreateCommand();
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-                if(countryModel.CountryID == 0)
+                if(countryModel.CountryID > 0)
                 {
                     sqlCommand.CommandText = "UPDATELOC_Country";
                     sqlCommand.Parameters.AddWithValue("@CountryID", countryModel.CountryID);

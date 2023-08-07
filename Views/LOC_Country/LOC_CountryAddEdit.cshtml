@@ -1,20 +1,14 @@
 ﻿@model LOC_CountryModel;
 
 @{
-   
     string opration = "";
     if (ViewBag.ID > 0)
     {
-        //opration = "LOC_countryEdit";
-        
-        <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            A simple primary alert—check it out!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+        opration = "Edit";
     }
     else
     {
-        //opration = "LOC_countryAdd";
+        opration = "Add";
     }
 }
 
@@ -23,16 +17,10 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Horizontal Form</h5>
+            <h5 class="card-title">@opration Record</h5>
             <!-- Horizontal Form -->
-                <form asp-action="LOC_CountryAddEdit">
-                    <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">Country Name</label>
-                        <div class="col-sm-9">
-                            <input asp-for="CountryID" type="text" class="form-control" disabled>
-                            
-                        </div>
-                    </div>
+                <form asp-action="LOC_countryAddEdit" asp-controller="Loc_Country" method="POST">
+                    @Html.HiddenFor(x => x.CountryID)
                 <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Country Name</label>
                     <div class="col-sm-9">
@@ -48,8 +36,7 @@
                     </div>
                 </div>
                 <div class="text-left">
-                    <button type="submit" class="btn btn-primary">Add Record</button>
-                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary">@opration Record</button>
                 </div>
             </form><!-- End Horizontal Form -->
 

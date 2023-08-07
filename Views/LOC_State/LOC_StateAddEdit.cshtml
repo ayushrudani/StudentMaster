@@ -1,0 +1,45 @@
+﻿@using System.Data;
+@model LOC_StateModel;
+@{
+    LOC_CountryDropDownModel d = new LOC_CountryDropDownModel();
+}
+<div class="row ">
+    <div class="col-lg-8 align-items-center">
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Add State</h5>
+
+        <!-- Multi Columns Form -->
+        <form class="row g-3" asp-action="LOC_StateAddEdit" method="post">
+            <div class="col-md-12">
+                <label for="inputName5" class="form-label">State Name</label>
+                <input asp-for="StateName"  type="text" class="form-control">
+                <span asp-validation-for = "StateName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                 <label for="inputName5" class="form-label">State Code</label>
+                 <input asp-for="StateName" type="text" class="form-control">
+                 <span asp-validation-for="StateName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                        <label for="inputState" class="form-label">Country</label>
+                        <select asp-for="@d" asp-items="ViewBag.countryDropDownModel" id="inputState" class="form-select">
+                            @foreach (LOC_CountryDropDownModel data in ViewBag.countryDropDownModel)
+                            {
+                                <option>@data.CountryName</option>
+                            }
+                        </select>
+                        
+            </div>
+
+            <div class="text-left">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                
+            </div>
+        </form><!-- End Multi Columns Form -->
+
+    </div>
+</div>
+</div>
+</div>

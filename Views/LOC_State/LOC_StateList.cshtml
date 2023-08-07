@@ -1,5 +1,4 @@
 ﻿@using System.Data;
-
 @{
     string dateFormate(String input)
     {
@@ -10,37 +9,30 @@
 
 
 }
-@if (TempData["message"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle me-1"></i>
-        @TempData["message"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    
-}
 <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Country Table</h5>
-                <!-- Default Table -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Country Name</th>
-                            <th scope="col">Country Code</th>
-                            <th scope="col">Created Date</th>
-                            <th scope="col">Modified Date</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach(DataRow data in Model.Rows)
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">State Table</h5>
+            <!-- Default Table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">State Name</th>
+                        <th scope="col">State Code</th>
+                        <th scope="col">Country Code</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">Modified Date</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow data in Model.Rows)
                     {
                         <tr>
                             <th scope="row">@data["CountryID"]</th>
                             <td>@data["CountryName"]</td>
+                            <td>@data["CountryCode"]</td>
                             <td>@data["CountryCode"]</td>
                             <td>@dateFormate(data["Created"].ToString())</td>
                             <td>@dateFormate(data["Modified"].ToString())</td>
@@ -51,9 +43,9 @@
                         </tr>
                     }
                 </tbody>
-                </table>
-                <!-- End Default Table Example -->
-            </div>
+            </table>
+            <!-- End Default Table Example -->
         </div>
-        
+    </div>
+
 </div>

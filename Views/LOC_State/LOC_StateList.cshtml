@@ -6,7 +6,15 @@
         ans = input.Split(' ');
         return ans[0];
     }
+}
 
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        @TempData["message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
 }
 <div class="row">
@@ -14,38 +22,44 @@
         <div class="card-body">
             <h5 class="card-title">State Table</h5>
             <!-- Default Table -->
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">State Name</th>
-                        <th scope="col">State Code</th>
-                        <th scope="col">Country Code</th>
-                        <th scope="col">Created Date</th>
-                        <th scope="col">Modified Date</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (DataRow data in Model.Rows)
-                    {
+            @if(ViewBag.State != "NULL")
+            {
+                <table class="table">
+                    <thead>
                         <tr>
-                            <th scope="row">@data["CountryID"]</th>
-                            <td>@data["CountryName"]</td>
-                            <td>@data["CountryCode"]</td>
-                            <td>@data["CountryCode"]</td>
-                            <td>@dateFormate(data["Created"].ToString())</td>
-                            <td>@dateFormate(data["Modified"].ToString())</td>
-                            <td>
-                                <a asp-action="LOC_CountryEdit" asp-controller="LOC_Country" asp-route-id="@data["CountryID"]" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-pencil-square"></i></a>
-                                <a asp-action="LOC_CountryDelete" asp-controller="LOC_Country" asp-route-id="@data["CountryID"]" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                            </td>
+                            <th scope="col">ID</th>
+                            <th scope="col">State Name</th>
+                            <th scope="col">State Code</th>
+                            <th scope="col">Country Code</th>
+                            <th scope="col">Created Date</th>
+                            <th scope="col">Modified Date</th>
+                            <th scope="col">Actions</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow data in Model.Rows)
+                        {
+                            <tr>
+                                <th scope="row">@data["StateID"]</th>
+                                <td>@data["StateName"]</td>
+                                <td>@data["StateCode"]</td>
+                                <td>@data["CountryCode"]</td>
+                                <td>@dateFormate(data["Created"].ToString())</td>
+                                <td>@dateFormate(data["Modified"].ToString())</td>
+                                <td>
+                                    <a asp-action="LOC_StateEdit" asp-controller="LOC_State" asp-route-id="@data["StateID"]" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-action="LOC_StateDelete" asp-controller="LOC_State" asp-route-id="@data["StateID"]" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h3>No Record Found</h3>
+            }
             <!-- End Default Table Example -->
         </div>
     </div>
-
 </div>

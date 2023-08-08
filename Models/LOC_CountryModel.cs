@@ -16,5 +16,11 @@ namespace StudentMaster.Models
 
         public DateOnly Modified { get; set;}
     }
+    public class LOC_CountryDropDownModel
+    {
+        public int CountryID { get; set; }
+
+        public string CountryCode { get; set; }
+    }
 
 }

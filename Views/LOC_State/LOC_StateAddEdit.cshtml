@@ -1,8 +1,7 @@
 ﻿@using System.Data;
 @model LOC_StateModel;
-@{
-    LOC_CountryDropDownModel d = new LOC_CountryDropDownModel();
-}
+
+
 <div class="row ">
     <div class="col-lg-8 align-items-center">
 
@@ -12,6 +11,7 @@
 
         <!-- Multi Columns Form -->
         <form class="row g-3" asp-action="LOC_StateAddEdit" method="post">
+                    @Html.HiddenFor(x => x.StateID)
             <div class="col-md-12">
                 <label for="inputName5" class="form-label">State Name</label>
                 <input asp-for="StateName"  type="text" class="form-control">
@@ -19,17 +19,15 @@
             </div>
             <div class="col-md-6">
                  <label for="inputName5" class="form-label">State Code</label>
-                 <input asp-for="StateName" type="text" class="form-control">
-                 <span asp-validation-for="StateName" class="text-danger"></span>
+                 <input asp-for="StateCode" type="text" class="form-control">
+                 <span asp-validation-for="StateCode" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                         <label for="inputState" class="form-label">Country</label>
-                        <select asp-for="@d" asp-items="ViewBag.countryDropDownModel" id="inputState" class="form-select">
-                            @foreach (LOC_CountryDropDownModel data in ViewBag.countryDropDownModel)
-                            {
-                                <option>@data.CountryName</option>
-                            }
+                        <select asp-for="CountryID" asp-items="@(new SelectList(ViewBag.countryDropDownModel,"CountryID","CountryCode"))" id="inputState" class="form-select">
+                            <option>Select State---</option>
                         </select>
+                        <span asp-validation-for="CountryID" class="text-danger"></span>
                         
             </div>
 
@@ -43,3 +41,9 @@
 </div>
 </div>
 </div>
+
+@*@section Scripts{
+    @{
+        <partial name = "_ValidationScriptsPartial" />
+    }
+}*@

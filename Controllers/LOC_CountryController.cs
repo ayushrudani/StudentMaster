@@ -26,6 +26,10 @@ namespace StudentMaster.Controllers
             SqlDataReader dr = cmd.ExecuteReader();
             dt.Load(dr);
             con.Close();
+            if(dt.Rows.Count == 0)
+            {
+                ViewBag.Country = "NULL";
+            }
             return View(dt);
         }
         
@@ -57,38 +61,16 @@ namespace StudentMaster.Controllers
                 sqlCommand.Parameters.AddWithValue("@CountryName", countryModel.CountryName);
                 sqlCommand.Parameters.AddWithValue("@CountryCode", countryModel.CountryCode);
                 sqlCommand.ExecuteNonQuery();
-                
                 return RedirectToAction("LOC_CountryList");
             }
             else
             {
-                
                 return View("LOC_CountryAddEdit");
             }
         }
 
 
-        [HttpPost]
-        public IActionResult LOC_countryEditData(LOC_CountryModel countryModel)
-        {
-            if (ModelState.IsValid)
-            {
-                SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
-                con.Open();
-                SqlCommand sqlCommand = con.CreateCommand();
-                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-                
-                sqlCommand.Parameters.AddWithValue("@CountryName", countryModel.CountryName);
-                sqlCommand.Parameters.AddWithValue("@CountryCode", countryModel.CountryCode);
-                sqlCommand.ExecuteNonQuery();
-                return RedirectToAction("LOC_CountryList");
-            }
-            else
-            {
 
-                return View("LOC_CountryAddEdit");
-            }
-        }
 
         [HttpGet]
         public IActionResult LOC_CountryEdit(int id)
@@ -119,16 +101,26 @@ namespace StudentMaster.Controllers
 
         public IActionResult LOC_CountryDelete(int id)
         {
-            SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
-            con.Open();
-            SqlCommand sqlCommand = con.CreateCommand();
-            sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-            sqlCommand.CommandText = "DELETELOC_Country";
-            sqlCommand.Parameters.AddWithValue("@id", id);
-            DataTable dt = new DataTable();
-            sqlCommand.ExecuteNonQuery();
-            TempData["message"] = "Record Deleted Successfully";
-            return RedirectToAction("LOC_CountryList");
+            try
+            {
+                SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
+                con.Open();
+                SqlCommand sqlCommand = con.CreateCommand();
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.CommandText = "DELETELOC_Country";
+                sqlCommand.Parameters.AddWithValue("@id", id);
+                DataTable dt = new DataTable();
+                sqlCommand.ExecuteNonQuery();
+                TempData["message"] = "Record Deleted Successfully";
+                return RedirectToAction("LOC_CountryList");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                TempData["message"] = ex.Message;
+                TempData["messageType"] = "Error";
+                return RedirectToAction("LOC_CountryList");
+            }
         }
 
     }

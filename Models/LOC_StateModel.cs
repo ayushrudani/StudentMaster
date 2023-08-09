@@ -21,5 +21,11 @@ namespace StudentMaster.Models
         public string? Modified { get; set;}
 
     }
-    
+    public class LOC_StateDropDownModel
+    {
+        public int StateID { get; set; }
+
+        public string StateCode { get; set; }
+    }
+
 }

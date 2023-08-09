@@ -33,15 +33,16 @@
 <div class="row">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">State Table</h5>
+            <h5 class="card-title">City Table</h5>
             <!-- Default Table -->
-            @if(ViewBag.State != "NULL")
+            @if (ViewBag.City != "NULL")
             {
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">State Name</th>
+                            <th scope="col">City Name</th>
+                            <th scope="col">City Code</th>
                             <th scope="col">State Code</th>
                             <th scope="col">Country Code</th>
                             <th scope="col">Created Date</th>
@@ -53,15 +54,16 @@
                         @foreach (DataRow data in Model.Rows)
                         {
                             <tr>
-                                <th scope="row">@data["StateID"]</th>
-                                <td>@data["StateName"]</td>
+                                <th scope="row">@data["CityID"]</th>
+                                <td>@data["CityName"]</td>
+                                <td>@data["CityCode"]</td>
                                 <td>@data["StateCode"]</td>
                                 <td>@data["CountryCode"]</td>
-                                <td>@dateFormate(data["Created"].ToString())</td>
+                                <td>@dateFormate(data["CreationDate"].ToString())</td>
                                 <td>@dateFormate(data["Modified"].ToString())</td>
                                 <td>
-                                    <a asp-action="LOC_StateEdit" asp-controller="LOC_State" asp-route-id="@data["StateID"]" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-pencil-square"></i></a>
-                                    <a asp-action="LOC_StateDelete" asp-controller="LOC_State" asp-route-id="@data["StateID"]" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                    <a asp-action="LOC_CityEdit" asp-controller="LOC_City" asp-route-id="@data["CityID"]" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-action="LOC_CityDelete" asp-controller="LOC_City" asp-route-id="@data["CityID"]" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         }

@@ -12,7 +12,7 @@
 }
 @if (TempData["message"] != null)
 {
-    if(TempData["messageType"] != "Error")
+    if (TempData["message"].ToString().Contains("Successfully"))
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="bi bi-check-circle me-1"></i>
@@ -23,7 +23,10 @@
     else
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            @TempData["message"]
+            <h4 class="alert-heading">Danger Heading</h4>
+            <p>@TempData["message"]</p>
+            <hr>
+            <p class="mb-0">Somthing Went Wrong!</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }

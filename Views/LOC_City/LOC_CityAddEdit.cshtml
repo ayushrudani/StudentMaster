@@ -1,0 +1,47 @@
+﻿@using System.Data;
+@model LOC_CityModel;
+
+
+<div class="row ">
+    <div class="col-lg-8 align-items-center">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Add City</h5>
+
+                <!-- Multi Columns Form -->
+                <form class="row g-3" asp-action="LOC_CityAddEdit" method="post">
+                    @Html.HiddenFor(x => x.CityID)
+                    <div class="col-md-12">
+                        <label for="inputName5" class="form-label">City Name</label>
+                        <input asp-for="CityName" type="text" class="form-control">
+                        <span asp-validation-for="CityName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputName5" class="form-label">City Code</label>
+                        <input asp-for="CityCode" type="text" class="form-control">
+                        <span asp-validation-for="CityCode" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputCity" class="form-label">State</label>
+                        <select asp-for="StateID" asp-items="@(new SelectList(ViewBag.stateDropDownModel,"StateID","StateCode"))" id="inputCity" class="form-select">
+                            <option>Select City---</option>
+                        </select>
+                        <span asp-validation-for="StateID" class="text-danger"></span>
+                    </div>
+
+                    <div class="text-left">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                    </div>
+                </form><!-- End Multi Columns Form -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@section Scripts{
+    @{
+        <partial name = "_ValidationScriptsPartial" />
+    }
+}*@

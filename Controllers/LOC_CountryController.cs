@@ -112,15 +112,13 @@ namespace StudentMaster.Controllers
                 DataTable dt = new DataTable();
                 sqlCommand.ExecuteNonQuery();
                 TempData["message"] = "Record Deleted Successfully";
-                return RedirectToAction("LOC_CountryList");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 TempData["message"] = ex.Message;
-                TempData["messageType"] = "Error";
-                return RedirectToAction("LOC_CountryList");
             }
+            return RedirectToAction("LOC_CountryList");
         }
 
     }

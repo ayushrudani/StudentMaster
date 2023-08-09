@@ -27,8 +27,7 @@
                         <select asp-for="CountryID" asp-items="@(new SelectList(ViewBag.countryDropDownModel,"CountryID","CountryCode"))" id="inputState" class="form-select">
                             <option>Select State---</option>
                         </select>
-                        <span asp-validation-for="CountryID" class="text-danger"></span>
-                        
+                        <span asp-validation-for="CountryID" class="text-danger"></span>   
             </div>
 
             <div class="text-left">
@@ -36,7 +35,6 @@
                 
             </div>
         </form><!-- End Multi Columns Form -->
-
     </div>
 </div>
 </div>

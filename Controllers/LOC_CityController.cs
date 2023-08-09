@@ -1,30 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentMaster.Models;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace StudentMaster.Controllers
 {
-    public class LOC_StateController : Controller
+    public class LOC_CityController : Controller
     {
         private IConfiguration configuration;
-        public LOC_StateController(IConfiguration _configuration)
+        public LOC_CityController(IConfiguration _configuration)
         {
             this.configuration = _configuration;
         }
-        public IActionResult LOC_StateList()
+        public IActionResult LOC_CityList()
         {
             SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
             conn.Open();
             SqlCommand sqlCommand = conn.CreateCommand(); ;
             sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-            sqlCommand.CommandText = "SELECTALLOC_State";
+            sqlCommand.CommandText = "SELECTALLOC_City";
             DataTable dt = new DataTable();
             SqlDataReader dr = sqlCommand.ExecuteReader();
             dt.Load(dr);
             if (dt.Rows.Count == 0)
             {
-                ViewBag.State = "NULL";
+                ViewBag.City = "NULL";
             }
             return View(dt);
         }
@@ -34,23 +34,22 @@ namespace StudentMaster.Controllers
             conn.Open();
             SqlCommand sqlCommand = conn.CreateCommand(); ;
             sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-            sqlCommand.CommandText = "LOC_CountryList";
+            sqlCommand.CommandText = "LOC_StateList";
             DataTable dt = new DataTable();
             SqlDataReader dr = sqlCommand.ExecuteReader();
             dt.Load(dr);
-            List<LOC_CountryDropDownModel> countryDropDownModelList = new List<LOC_CountryDropDownModel>();
+            List<LOC_StateDropDownModel> stateDropDownModelList = new List<LOC_StateDropDownModel>();
             foreach (DataRow data in dt.Rows)
             {
-                LOC_CountryDropDownModel countryDropDownModel = new LOC_CountryDropDownModel();
-                countryDropDownModel.CountryID = Convert.ToInt32(data["CountryID"]);
-                countryDropDownModel.CountryCode = data["CountryCode"].ToString();
-                countryDropDownModelList.Add(countryDropDownModel);
+                LOC_StateDropDownModel stateDropDownModel = new LOC_StateDropDownModel();
+                stateDropDownModel.StateID = Convert.ToInt32(data["StateID"]);
+                stateDropDownModel.StateCode = data["StateCode"].ToString();
+                stateDropDownModelList.Add(stateDropDownModel);
             }
-
-            ViewBag.countryDropDownModel = countryDropDownModelList;
+            ViewBag.stateDropDownModel = stateDropDownModelList;
             conn.Close();
         }
-        public IActionResult LOC_StateAddEdit()
+        public IActionResult LOC_CityAddEdit()
         {
             SetDropDownList();
             return View();
@@ -58,7 +57,7 @@ namespace StudentMaster.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult LOC_StateAddEdit(LOC_StateModel stateModel)
+        public IActionResult LOC_CityAddEdit(LOC_CityModel cityModel)
         {
             if (ModelState.IsValid)
             {
@@ -66,24 +65,24 @@ namespace StudentMaster.Controllers
                 conn.Open();
                 SqlCommand sqlCommand = conn.CreateCommand(); ;
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-                if (stateModel.StateID == null)
+                if (cityModel.CityID == null)
                 {
-                    sqlCommand.CommandText = "InsertLOC_State";
+                    sqlCommand.CommandText = "InsertLOC_City";
                     TempData["message"] = "Record Inserted Successfully";
                 }
                 else
                 {
-                    sqlCommand.CommandText = "UPDATELOC_State";
-                    sqlCommand.Parameters.AddWithValue("@ID", stateModel.StateID);
+                    sqlCommand.CommandText = "UPDATELOC_City";
+                    sqlCommand.Parameters.AddWithValue("@ID", cityModel.CityID);
                     TempData["message"] = "Record Updated Successfully";
                 }
-                sqlCommand.Parameters.AddWithValue("@CountryID", stateModel.CountryID);
-                sqlCommand.Parameters.AddWithValue("@StateName", stateModel.StateName);
-                sqlCommand.Parameters.AddWithValue("@StateCode", stateModel.StateCode);
+                sqlCommand.Parameters.AddWithValue("@StateID", cityModel.StateID);
+                sqlCommand.Parameters.AddWithValue("@CityName", cityModel.CityName);
+                sqlCommand.Parameters.AddWithValue("@CityCode", cityModel.CityCode);
                 DataTable dt = new DataTable();
                 SqlDataReader dr = sqlCommand.ExecuteReader();
                 dt.Load(dr);
-                return RedirectToAction("LOC_StateList");
+                return RedirectToAction("LOC_CityList");
             }
             else
             {
@@ -92,34 +91,34 @@ namespace StudentMaster.Controllers
             }
         }
         [HttpGet]
-        public IActionResult LOC_StateEdit(int id)
+        public IActionResult LOC_CityEdit(int id)
         {
             SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
             con.Open();
             SqlCommand sqlCommand = con.CreateCommand();
             sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-            sqlCommand.CommandText = "SelectByPKLOC_State";
+            sqlCommand.CommandText = "SelectByPKLOC_City";
             sqlCommand.Parameters.AddWithValue("@ID", id);
             DataTable dt = new DataTable();
             SqlDataReader sdr = sqlCommand.ExecuteReader();
             dt.Load(sdr);
-            LOC_StateModel stateModel = new LOC_StateModel();
+            LOC_CityModel cityModel = new LOC_CityModel();
             if (dt.Rows.Count == 1)
             {
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    stateModel.StateID = Convert.ToInt32(dataRow[0]);
-                    stateModel.CountryID = Convert.ToInt32(dataRow[1]);
-                    stateModel.StateName = dataRow[2].ToString();
-                    stateModel.StateCode = dataRow[3].ToString();
+                    cityModel.CityID = Convert.ToInt32(dataRow[0]);
+                    cityModel.StateID = Convert.ToInt32(dataRow[1]);
+                    cityModel.CityName = dataRow[3].ToString();
+                    cityModel.CityCode = dataRow[4].ToString();
                 }
             }
             ViewBag.ID = id;
             con.Close();
             SetDropDownList();
-            return View("LOC_StateAddEdit", stateModel);
+            return View("LOC_CityAddEdit", cityModel);
         }
-        public IActionResult LOC_StateDelete(int id)
+        public IActionResult LOC_CityDelete(int id)
         {
 
             try
@@ -128,7 +127,7 @@ namespace StudentMaster.Controllers
                 con.Open();
                 SqlCommand sqlCommand = con.CreateCommand();
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-                sqlCommand.CommandText = "DELETELOC_State";
+                sqlCommand.CommandText = "DELETELOC_City";
                 sqlCommand.Parameters.AddWithValue("@ID", id);
                 DataTable dt = new DataTable();
                 sqlCommand.ExecuteNonQuery();
@@ -139,8 +138,7 @@ namespace StudentMaster.Controllers
                 Console.WriteLine(ex.Message);
                 TempData["message"] = ex.Message;
             }
-            return RedirectToAction("LOC_StateList");
+            return RedirectToAction("LOC_CityList");
         }
-        
     }
 }

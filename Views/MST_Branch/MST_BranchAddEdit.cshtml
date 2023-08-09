@@ -1,0 +1,47 @@
+﻿@model MST_BranchModel;
+
+@{
+    string opration = "";
+    if (ViewBag.ID > 0)
+    {
+        opration = "Edit";
+    }
+    else
+    {
+        opration = "Add";
+    }
+}
+
+<div class="row ">
+<div class="col-lg-8 align-items-center">
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@opration Record</h5>
+            <!-- Horizontal Form -->
+                <form asp-action="MST_BranchAddEdit" asp-controller="MST_Branch" method="POST">
+                    @Html.HiddenFor(x => x.BranchID)
+                <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Branch Name</label>
+                    <div class="col-sm-9">
+                        <input asp-for="BranchName" type="text" class="form-control">
+                        <span asp-validation-for="BranchName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Branch Code</label>
+                    <div class="col-sm-9">
+                        <input type="text" asp-for="BranchCode" class="form-control">
+                        <span asp-validation-for="BranchCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="text-left">
+                        <button type="submit" class="btn btn-primary">@opration Record</button>
+                    </div>
+                </form><!-- End Horizontal Form -->
+
+            </div>
+        </div>
+
+    </div>
+</div>

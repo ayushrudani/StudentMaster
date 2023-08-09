@@ -1,0 +1,76 @@
+﻿@using System.Data;
+@{
+    string dateFormate(String input)
+    {
+        string[] ans = new string[3];
+        ans = input.Split(' ');
+        return ans[0];
+    }
+}
+
+@if (TempData["message"] != null)
+{
+    if (TempData["message"].ToString().Contains("Successfully"))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            @TempData["message"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Danger Heading</h4>
+            <p>@TempData["message"]</p>
+            <hr>
+            <p class="mb-0">Somthing Went Wrong!</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+}
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Branch Table</h5>
+            <!-- Default Table -->
+            @if (ViewBag.Branch != "NULL")
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Branch Name</th>
+                            <th scope="col">Branch Code</th>
+                            <th scope="col">Created Date</th>
+                            <th scope="col">Modified Date</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow data in Model.Rows)
+                        {
+                            <tr>
+                                <th scope="row">@data["BranchID"]</th>
+                                <td>@data["BranchName"]</td>
+                                <td>@data["BranchCode"]</td>
+                                <td>@dateFormate(data["Created"].ToString())</td>
+                                <td>@dateFormate(data["Modified"].ToString())</td>
+                                <td>
+                                    <a asp-action="MST_BranchEdit" asp-controller="MST_Branch" asp-route-id="@data["BranchID"]" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-action="MST_BranchDelete" asp-controller="MST_Branch" asp-route-id="@data["BranchID"]" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h3>No Record Found</h3>
+            }
+            <!-- End Default Table Example -->
+        </div>
+    </div>
+</div>

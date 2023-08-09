@@ -6,10 +6,10 @@ namespace StudentMaster.Models
     {
         public int? CityID { get; set; }
 
-        [Required(ErrorMessage = "Please Enter State Name")]
+        [Required(ErrorMessage = "Please Enter City Name")]
         public string CityName { get; set; }
 
-        [Required(ErrorMessage = "Please Enter State Code")]
+        [Required(ErrorMessage = "Please Enter City Code")]
         public string CityCode { get; set; }
 
         [Required(ErrorMessage = "Please Choose State Name")]

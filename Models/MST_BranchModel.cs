@@ -16,4 +16,9 @@ namespace StudentMaster.Models
 
         public string? Modified { get; set; }
     }
+    public class LOC_BranchDropDownModel
+    {
+        public int? BranchID { get; set; }
+        public string BranchCode { get; set; }
+    }
 }

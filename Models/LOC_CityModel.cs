@@ -18,4 +18,9 @@ namespace StudentMaster.Models
 
         public string? Modified { get; set; }
     }
+    public class LOC_CityDropDown
+    {
+        public int CityID { get; set; }
+        public string CityCode { get; set; }
+    }
 }

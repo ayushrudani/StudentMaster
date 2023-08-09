@@ -1,0 +1,114 @@
+﻿@using System.Data;
+@model MST_StudentModel;
+
+
+<div class="row ">
+    <div class="col-lg-8 align-items-center">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Multi Columns Form</h5>
+                <!-- Multi Columns Form -->
+                <form class="row g-3" asp-action="MST_StudentAddEdit" method="post">
+                    @Html.HiddenFor(x => x.StudentID)
+                    <div class="col-md-12">
+                        <label for="inputName5" class="form-label">Your Name</label>
+                        <input asp-for="StudentName" type="text" class="form-control" id="inputName5">
+                        <span asp-validation-for="StudentName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputEmail5" class="form-label">Email</label>
+                        <input asp-for="Email" type="email" class="form-control" id="inputEmail5">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+ 
+                        <label for="inputPassword5" class="form-label">Password</label>
+                        <input asp-for="Password"  type="password" class="form-control" id="inputPassword5">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress5" class="form-label">Address</label>
+                        <textarea asp-for="Address"  type="text" class="form-control" id="inputAddres5s"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputZip" class="form-label">Gender</label>
+                        <select asp-for="Gender" id="inputState" class="form-select">
+                            <option selected="">Choose...</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputState" class="form-label">Branch</label>
+                        <select asp-for="BranchID" asp-items="@(new SelectList(ViewBag.branchDropDownModel,"BranchID","BranchCode"))" id="inputState" class="form-select">
+                            <option selected="">Choose...</option>
+                        </select>
+                        <span asp-validation-for="BranchID" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputZip" class="form-label">City</label>
+                        <select asp-for="CityID" asp-items="@(new SelectList(ViewBag.cityDropDownModel,"CityID","CityCode"))" id="inputState" class="form-select">
+                            <option selected="">Choose...</option>
+                        </select>
+                        <span asp-validation-for="CityID" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputEmail5" class="form-label">Student Mobile No.</label>
+                        <input asp-for="MobileNoStudent" type="text" class="form-control" id="inputEmail5">
+                        <span asp-validation-for="MobileNoStudent" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label for="inputPassword5" class="form-label">Father Mobile No.</label>
+                        <input asp-for="MobileNoFather" type="text" class="form-control" id="inputPassword5">
+                        <span asp-validation-for="MobileNoFather" class="text-danger"></span>
+
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputDate5" class="form-label" >Birth Date</label>
+                        <input asp-for="BirthDate" type="date" class="form-control" id="inputDate5" onchange="fun()">
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputZip" class="form-label">IsActivy</label>
+                        <select asp-for="IsActive" id="inputState" class="form-select">
+                            <option selected="">Yes</option>
+                            <option>No</option>
+                        </select>
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputDate5" class="form-label">Age</label>
+                        <input type="text" class="form-control" id="inputDate6"  disabled="">
+                    </div>
+                    <div class="text-left">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form><!-- End Multi Columns Form -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function fun(){
+        
+        var dob = document.getElementById('inputDate5').value;
+        const date = new Date();
+        let year = date.getFullYear();
+        document.getElementById("inputDate6").setAttribute('value', year - (dob.split('-')[0]));
+    }
+</script>
+@*@section Scripts{
+    @{
+        <partial name = "_ValidationScriptsPartial" />
+    }
+}*@

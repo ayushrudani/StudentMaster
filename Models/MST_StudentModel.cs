@@ -37,12 +37,15 @@ namespace StudentMaster.Models
         [Required(ErrorMessage = "Please Enter Gender")]
 
         public string Gender { get; set;}
-        
-        public string? Password { get; set;}
+
+        [Required(ErrorMessage = "Please Enter Password")]
+        public string Password { get; set;}
 
         public string? Created { get; set; }
 
         public string? Modified { get; set; }
+
+        public string? StudentNameSearch { get; set;}
 
 
     }

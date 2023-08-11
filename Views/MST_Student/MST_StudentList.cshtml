@@ -52,9 +52,10 @@
 </style>
 <div class="row">
     <div class="search-bar col-md-4 mb-3">
-        <div class="search-form d-flex align-items-center">
-            <input type="text" name="query" placeholder="Student Name" title="Enter search keyword" id="txtSearch">
-        </div>
+        <form class="search-form d-flex align-items-center" asp-action="SearchStudentName">
+            <input type="text" name="studentName" placeholder="Student Name" title="Enter search keyword" id="txtSearch">
+            <button type="submit" title="Search" fdprocessedid="mgo3f"><i  class="bi bi-search"></i></button>
+        </form>
         
     </div><!-- End Search Bar -->
 
@@ -64,7 +65,7 @@
         <div class="card-body">
             <h5 class="card-title">Student Table</h5>
             <!-- Default Table -->
-            @if (ViewBag.Country != "NULL")
+            @if (ViewBag.Student != "NULL")
             {
                 <table class="table">
                     <thead>
@@ -106,6 +107,13 @@
     </div>
 </div>
 
-@section scripts{
-    <script src="/js/Search.js"></script>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var studentName = '@ViewBag.Student';
+            
+            $("#txtSearch").val(studentName);
+        });
+    </script>
 }

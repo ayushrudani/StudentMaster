@@ -28,7 +28,7 @@ namespace StudentMaster.Controllers
             con.Close();
             if (dt.Rows.Count == 0)
             {
-                ViewBag.Country = "NULL";
+                ViewBag.Student = "NULL";
             }
             return View(dt);
         }
@@ -45,11 +45,13 @@ namespace StudentMaster.Controllers
             ans = input.Split(' ');
             return ans[0];
         }
+
+        #region Student Add | Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult MST_StudentAddEdit(MST_StudentModel studentModel)
         {
-            
+
             if (ModelState.IsValid)
             {
                 SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
@@ -68,6 +70,9 @@ namespace StudentMaster.Controllers
                     sqlCommand.Parameters.AddWithValue("@ID", studentModel.StudentID);
                     TempData["message"] = "Record Updated Successfully";
                 }
+
+                #region Add Parameteres
+
                 sqlCommand.Parameters.AddWithValue("@BranchID", studentModel.BranchID);
                 sqlCommand.Parameters.AddWithValue("@CityID", studentModel.CityID);
                 sqlCommand.Parameters.AddWithValue("@StudentName", studentModel.StudentName);
@@ -75,19 +80,22 @@ namespace StudentMaster.Controllers
                 sqlCommand.Parameters.AddWithValue("@Email", studentModel.Email);
                 sqlCommand.Parameters.AddWithValue("@MobileNoFather", studentModel.MobileNoFather);
                 sqlCommand.Parameters.AddWithValue("@Address", studentModel.Address);
-                sqlCommand.Parameters.AddWithValue("@BirthDate", dateFormate(studentModel.BirthDate.ToString()));
-                if(studentModel.IsActive == "Yes")
+                sqlCommand.Parameters.AddWithValue("@BirthDate", dateFormate(studentModel.BirthDate.ToString())); 
+                #endregion
+
+
+                if (studentModel.IsActive == "Yes")
                 {
-                sqlCommand.Parameters.AddWithValue("@IsActive", 1);
+                    sqlCommand.Parameters.AddWithValue("@IsActive", 1);
                 }
                 else
                 {
                     sqlCommand.Parameters.AddWithValue("@IsActive", 0);
                 }
                 sqlCommand.Parameters.AddWithValue("@Gender", studentModel.Gender);
-                
+
                 sqlCommand.ExecuteNonQuery();
-                if(studentModel.StudentID == null)
+                if (studentModel.StudentID == null)
                 {
                     return RedirectToAction("MST_StudentList");
                 }
@@ -103,6 +111,9 @@ namespace StudentMaster.Controllers
                 return View("MST_StudentAddEdit");
             }
         }
+        #endregion
+
+        #region Fill City Dropdown
         public void SetCityDropDownList()
         {
             SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
@@ -125,6 +136,10 @@ namespace StudentMaster.Controllers
             ViewBag.cityDropDownModel = cityDropDownModelList;
             conn.Close();
         }
+
+        #endregion
+
+        #region Fill State Dropdown
         public void SetBranchDropDownList()
         {
             SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
@@ -146,7 +161,9 @@ namespace StudentMaster.Controllers
 
             ViewBag.branchDropDownModel = branchDropDownModelList;
             conn.Close();
-        }
+        } 
+        #endregion
+
         public IActionResult MST_StudentProfile(int id)
         {
             SetBranchDropDownList();
@@ -210,24 +227,32 @@ namespace StudentMaster.Controllers
             }
             return RedirectToAction("MST_StudentList");
         }
-        //public IActionResult SearchStudentName(MST_StudentModel studentModel)
-        //{
-        //    SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
-        //    con.Open();
-        //    SqlCommand sqlCommand = con.CreateCommand();
-        //    sqlCommand.CommandType = System.Data.CommandType.Text;
-        //    sqlCommand.CommandText = "select ";
-        //    sqlCommand.Parameters.AddWithValue("@StudentName", studentModel.StudentNameSearch);
-        //    DataTable dt = new DataTable();
-        //    sqlCommand.ExecuteNonQuery();
-        //    if(dt.Rows.Count == 0)
-        //    {
-        //        return RedirectToAction("MST_StudentList", dt);
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("MST_StudentList", dt);
-        //    }
-        //}
+        public IActionResult SearchStudentName(string studentName)
+        {
+            ViewBag.Student = studentName;
+                if (studentName == null)
+            {
+                return RedirectToAction("MST_StudentList");
+            }
+                SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
+                con.Open();
+                SqlCommand sqlCommand = con.CreateCommand();
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlCommand.CommandText = "SearchStudentName";
+                sqlCommand.Parameters.AddWithValue("@studentName", studentName);
+                DataTable dt = new DataTable();
+                SqlDataReader dr = sqlCommand.ExecuteReader();
+                dt.Load(dr);
+                con.Close();
+                if (dt.Rows.Count == 0)
+                {
+                    ViewBag.Student = "NULL";
+                    return View("MST_StudentList");
+                }
+                else
+                {
+                    return View("MST_StudentList", dt);
+                }
+        }
     }
 }

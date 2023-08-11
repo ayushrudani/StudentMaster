@@ -210,24 +210,24 @@ namespace StudentMaster.Controllers
             }
             return RedirectToAction("MST_StudentList");
         }
-        public IActionResult SearchStudentName(MST_StudentModel studentModel)
-        {
-            SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
-            con.Open();
-            SqlCommand sqlCommand = con.CreateCommand();
-            sqlCommand.CommandType = System.Data.CommandType.Text;
-            sqlCommand.CommandText = "select ";
-            sqlCommand.Parameters.AddWithValue("@StudentName", studentModel.StudentNameSearch);
-            DataTable dt = new DataTable();
-            sqlCommand.ExecuteNonQuery();
-            if(dt.Rows.Count == 0)
-            {
-                return RedirectToAction("MST_StudentList", dt);
-            }
-            else
-            {
-                return RedirectToAction("MST_StudentList", dt);
-            }
-        }
+        //public IActionResult SearchStudentName(MST_StudentModel studentModel)
+        //{
+        //    SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("myConnectionString"));
+        //    con.Open();
+        //    SqlCommand sqlCommand = con.CreateCommand();
+        //    sqlCommand.CommandType = System.Data.CommandType.Text;
+        //    sqlCommand.CommandText = "select ";
+        //    sqlCommand.Parameters.AddWithValue("@StudentName", studentModel.StudentNameSearch);
+        //    DataTable dt = new DataTable();
+        //    sqlCommand.ExecuteNonQuery();
+        //    if(dt.Rows.Count == 0)
+        //    {
+        //        return RedirectToAction("MST_StudentList", dt);
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("MST_StudentList", dt);
+        //    }
+        //}
     }
 }

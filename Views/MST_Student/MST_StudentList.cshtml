@@ -52,10 +52,10 @@
 </style>
 <div class="row">
     <div class="search-bar col-md-4 mb-3">
-        <form class="search-form d-flex align-items-center" method="POST" asp-action="SearchStudentName" asp-controller="MST_Student">
-            <input type="text" asp-for="@studentModel.StudentNameSearch" name="query" placeholder="Student Name" title="Enter search keyword">
-            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-        </form>
+        <div class="search-form d-flex align-items-center">
+            <input type="text" name="query" placeholder="Student Name" title="Enter search keyword" id="txtSearch">
+        </div>
+        
     </div><!-- End Search Bar -->
 
 </div>
@@ -105,3 +105,7 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script src="/js/Search.js"></script>
+}
